@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PharmacyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Manufactures">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="NameManufacture" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="MedicalPreparations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="NamePreparation" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ManufactureID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="CountInPackage" Type="int" />
+        </EntityType>
+        <EntityType Name="PointsOfSale">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="AddressOfPoint" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="PointOfSaleID" Type="int" Nullable="false" />
+          <Property Name="shelfLife" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__MedicalPr__Manuf__5EBF139D">
+          <End Role="Manufactures" Type="Self.Manufactures" Multiplicity="1" />
+          <End Role="MedicalPreparations" Type="Self.MedicalPreparations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufactures">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MedicalPreparations">
+              <PropertyRef Name="ManufactureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductLi__Point__6477ECF3">
+          <End Role="PointsOfSale" Type="Self.PointsOfSale" Multiplicity="1" />
+          <End Role="ProductList" Type="Self.ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointsOfSale">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="PointOfSaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductLi__Produ__6383C8BA">
+          <End Role="MedicalPreparations" Type="Self.MedicalPreparations" Multiplicity="1" />
+          <End Role="ProductList" Type="Self.ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalPreparations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PharmacyModelContainer">
+          <EntitySet Name="Manufactures" EntityType="Self.Manufactures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalPreparations" EntityType="Self.MedicalPreparations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PointsOfSale" EntityType="Self.PointsOfSale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductList" EntityType="Self.ProductList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MedicalPr__Manuf__5EBF139D" Association="Self.FK__MedicalPr__Manuf__5EBF139D">
+            <End Role="Manufactures" EntitySet="Manufactures" />
+            <End Role="MedicalPreparations" EntitySet="MedicalPreparations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductLi__Point__6477ECF3" Association="Self.FK__ProductLi__Point__6477ECF3">
+            <End Role="PointsOfSale" EntitySet="PointsOfSale" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductLi__Produ__6383C8BA" Association="Self.FK__ProductLi__Produ__6383C8BA">
+            <End Role="MedicalPreparations" EntitySet="MedicalPreparations" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PharmacyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Manufactures">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="NameManufacture" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalPreparations" Relationship="Self.FK__MedicalPr__Manuf__5EBF139D" FromRole="Manufactures" ToRole="MedicalPreparations" />
+        </EntityType>
+        <EntityType Name="MedicalPreparations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="NamePreparation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManufactureID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="CountInPackage" Type="Int32" />
+          <NavigationProperty Name="Manufactures" Relationship="Self.FK__MedicalPr__Manuf__5EBF139D" FromRole="MedicalPreparations" ToRole="Manufactures" />
+          <NavigationProperty Name="ProductList" Relationship="Self.FK__ProductLi__Produ__6383C8BA" FromRole="MedicalPreparations" ToRole="ProductList" />
+        </EntityType>
+        <EntityType Name="PointsOfSale">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="AddressOfPoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ProductList" Relationship="Self.FK__ProductLi__Point__6477ECF3" FromRole="PointsOfSale" ToRole="ProductList" />
+        </EntityType>
+        <EntityType Name="ProductList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="PointOfSaleID" Type="Int32" Nullable="false" />
+          <Property Name="shelfLife" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="MedicalPreparations" Relationship="Self.FK__ProductLi__Produ__6383C8BA" FromRole="ProductList" ToRole="MedicalPreparations" />
+          <NavigationProperty Name="PointsOfSale" Relationship="Self.FK__ProductLi__Point__6477ECF3" FromRole="ProductList" ToRole="PointsOfSale" />
+        </EntityType>
+        <Association Name="FK__MedicalPr__Manuf__5EBF139D">
+          <End Role="Manufactures" Type="Self.Manufactures" Multiplicity="1" />
+          <End Role="MedicalPreparations" Type="Self.MedicalPreparations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufactures">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MedicalPreparations">
+              <PropertyRef Name="ManufactureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductLi__Produ__6383C8BA">
+          <End Role="MedicalPreparations" Type="Self.MedicalPreparations" Multiplicity="1" />
+          <End Role="ProductList" Type="Self.ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalPreparations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductLi__Point__6477ECF3">
+          <End Role="PointsOfSale" Type="Self.PointsOfSale" Multiplicity="1" />
+          <End Role="ProductList" Type="Self.ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointsOfSale">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="PointOfSaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PharmacyEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Manufactures" EntityType="Self.Manufactures" />
+          <EntitySet Name="MedicalPreparations" EntityType="Self.MedicalPreparations" />
+          <EntitySet Name="PointsOfSale" EntityType="Self.PointsOfSale" />
+          <EntitySet Name="ProductList" EntityType="Self.ProductList" />
+          <AssociationSet Name="FK__MedicalPr__Manuf__5EBF139D" Association="Self.FK__MedicalPr__Manuf__5EBF139D">
+            <End Role="Manufactures" EntitySet="Manufactures" />
+            <End Role="MedicalPreparations" EntitySet="MedicalPreparations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductLi__Produ__6383C8BA" Association="Self.FK__ProductLi__Produ__6383C8BA">
+            <End Role="MedicalPreparations" EntitySet="MedicalPreparations" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductLi__Point__6477ECF3" Association="Self.FK__ProductLi__Point__6477ECF3">
+            <End Role="PointsOfSale" EntitySet="PointsOfSale" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PharmacyModelContainer" CdmEntityContainer="PharmacyEntities2">
+          <EntitySetMapping Name="Manufactures">
+            <EntityTypeMapping TypeName="PharmacyModel.Manufactures">
+              <MappingFragment StoreEntitySet="Manufactures">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameManufacture" ColumnName="NameManufacture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalPreparations">
+            <EntityTypeMapping TypeName="PharmacyModel.MedicalPreparations">
+              <MappingFragment StoreEntitySet="MedicalPreparations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NamePreparation" ColumnName="NamePreparation" />
+                <ScalarProperty Name="ManufactureID" ColumnName="ManufactureID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CountInPackage" ColumnName="CountInPackage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointsOfSale">
+            <EntityTypeMapping TypeName="PharmacyModel.PointsOfSale">
+              <MappingFragment StoreEntitySet="PointsOfSale">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="AddressOfPoint" ColumnName="AddressOfPoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductList">
+            <EntityTypeMapping TypeName="PharmacyModel.ProductList">
+              <MappingFragment StoreEntitySet="ProductList">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="PointOfSaleID" ColumnName="PointOfSaleID" />
+                <ScalarProperty Name="shelfLife" ColumnName="shelfLife" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
